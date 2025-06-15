@@ -12,16 +12,19 @@
 
   <script type="text/babel">
     function generateNumbers() {
-      const numbers = Array.from({ length: 45 }, (_, i) => i + 1); // Create a list of numbers from 1 to 45
-      numbers.sort(() => Math.random() - 0.5);  // Shuffle the numbers randomly
-      return numbers.slice(0, 5);  // Select the first 5 numbers
+      const numbers = Array.from({ length: 45 }, (_, i) => i + 1);
+      numbers.sort(() => Math.random() - 0.5);
+      return numbers.slice(0, 5);
     }
 
     function drawLottery() {
       const result = [];
       for (let i = 0; i < 5; i++) {
         const setOfNumbers = generateNumbers();
-        const bonusNumber = Math.floor(Math.random() * 45) + 1;
+        let bonusNumber;
+        do {
+          bonusNumber = Math.floor(Math.random() * 45) + 1;
+        } while (setOfNumbers.includes(bonusNumber));
         setOfNumbers.push(bonusNumber);
         result.push(setOfNumbers);
       }
@@ -29,7 +32,7 @@
       const currentDatetime = new Date().toLocaleDateString('en-US');
 
       const container = document.getElementById('lottery-container');
-      container.innerHTML = ''; // Clear previous drawings
+      container.innerHTML = '';
       const colors = ['red', 'green', 'blue', 'grey', 'orange', 'purple'];
 
       for (let i = 0; i < result.length; i++) {
@@ -72,4 +75,3 @@
   </script>
 </body>
 </html>
-
